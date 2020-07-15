@@ -1,0 +1,34 @@
+name: test forecast
+vars:
+  df:
+    $type: DataFrame
+    columns: ['key', 'ds', 'y']
+    data:
+      - ['A', '2020-01-01', 10]
+      - ['A', '2020-01-02', 10]
+      - ['A', '2020-01-03', 10]
+      - ['A', '2020-01-04', 10]
+      - ['B', '2020-01-01', 10]
+      - ['B', '2020-01-02', 10]
+      - ['B', '2020-01-03', 10]
+      - ['B', '2020-01-04', 10]
+  periods: 2
+  expected_result:
+    $type: DataFrame
+    columns: ['key', 'ds',
+      'trend', 'yhat_lower', 'yhat_upper',
+      'trend_lower', 'trend_upper',
+      'additive_terms', 'additive_terms_lower', 'additive_terms_upper',
+      'multiplicative_terms', 'multiplicative_terms_lower', 'multiplicative_terms_upper',
+      'yhat']
+    data:
+      - ['A', '2020-01-05', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      - ['A', '2020-01-06', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      - ['B', '2020-01-05', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      - ['B', '2020-01-06', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+test: |
+  model = Prophet(engine='zero')
+  model.fit(df)
+  future = model.make_future_dataframe(periods=periods, include_history=False)
+  result = model.predict(future)
+  result['ds'] = result['ds'].astype('str')
