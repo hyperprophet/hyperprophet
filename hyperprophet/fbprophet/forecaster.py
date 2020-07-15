@@ -14,9 +14,9 @@ from datetime import timedelta, datetime
 import numpy as np
 import pandas as pd
 
-from fbprophet.make_holidays import get_holiday_names, make_holidays_df
-from fbprophet.models import StanBackendEnum
-from fbprophet.plot import (plot, plot_components)
+from .make_holidays import get_holiday_names, make_holidays_df
+from .models import StanBackendEnum
+from .plot import (plot, plot_components)
 
 logger = logging.getLogger('fbprophet')
 logger.setLevel(logging.INFO)
