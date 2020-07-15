@@ -1,0 +1,26 @@
+site_name: Hyperprophet
+theme:
+  name: material
+
+repo_name: rorodata/hyperprophet
+repo_url: https://github.com/rorodata/hyperprophet
+edit_uri: ""
+
+plugins:
+  - search
+  - awesome-pages
+  - git-revision-date-localized:
+      type: date
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
