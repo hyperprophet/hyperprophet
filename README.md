@@ -1,6 +1,6 @@
-# Hyperprophet
+# HyperProphet
 
-Client library for the Hyperprophet service.
+Client library for the HyperProphet service.
 
 # License
 
