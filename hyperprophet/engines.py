@@ -198,7 +198,18 @@ class Job:
         if d['ok'] is False:
             raise EngineError("Failed to read the results. ({})".format(d['error']))
 
-        return pd.read_parquet(d['download_url'])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "data.parq")
+            self._download(d['download_url'], path)
+            return pd.read_parquet(path)
+
+    def _download(self, url, path):
+        response = requests.get(url)
+        response.raise_for_status()
+        with open(path, 'wb') as f:
+            CHUNK_SIZE = 1024*1024 # 1MB
+            for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
+                f.write(chunk)
 
     def upload_files(self, df_train, df_predict):
         """Uploads the required files to the job.
