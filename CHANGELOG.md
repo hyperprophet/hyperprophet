@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.3] - 2020-07-31
+* Added support for passing optional arguments to Prophet
+* Added support for adding seasonalities and regressors
+
 ## [0.1.2] - 2020-07-24
 * Fixed the issue with reading the results of the forecast
 
