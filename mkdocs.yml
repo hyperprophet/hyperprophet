@@ -1,9 +1,9 @@
-site_name: Hyperprophet
+site_name: HyperProphet
 theme:
   name: material
 
-repo_name: rorodata/hyperprophet
-repo_url: https://github.com/rorodata/hyperprophet
+repo_name: hyperprophet/hyperprophet
+repo_url: https://github.com/hyperprophet/hyperprophet
 edit_uri: ""
 
 plugins:
@@ -22,5 +22,6 @@ markdown_extensions:
       permalink: true
 
 nav:
-  - Home: index.md
-  - Getting started: getting-started.md
+  - HyperProphet: index.md
+  - Quick Start: quick-start.md
+  - Release Notes: release-notes.md
