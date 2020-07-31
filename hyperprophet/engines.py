@@ -82,7 +82,12 @@ class LocalEngine(BaseEngine):
         df_fit = df_fit.drop('key', axis=1)
         df_predict = df_predict.drop('key', axis=1)
 
-        m = Prophet()
+        seasonalities = options.pop('seasonalities', {})
+        extra_regressors = options.pop('extra_regressors', {})
+
+        m = Prophet(**options)
+        m.seasonalities = seasonalities
+        m.extra_regressors = extra_regressors
         m.fit(df_fit)
         forecast = m.predict(df_predict)
 
@@ -142,9 +147,9 @@ class HyperprophetEngine(BaseEngine):
             **kwargs)
 
     def forecast(self, df_fit, df_predict, options):
-        job = Job.create(self)
+        job = Job.create(self, options)
         job.upload_files(df_fit, df_predict)
-        job.start(options)
+        job.start()
         job.wait()
         return job.read_results_df()
 
@@ -157,15 +162,14 @@ class Job:
         self.results_url = results_url
         self.progress = progress
 
-    def start(self, options):
+    def start(self):
         """Starts the job execution.
 
         This must be called after uploading the files.
         """
         url = "/jobs.start"
         payload = {
-            "id": self.id,
-            "options": options
+            "id": self.id
         }
         response = self.engine.request("POST", url, json=payload)
         if response.status_code != 200:
@@ -237,8 +241,12 @@ class Job:
                 raise EngineError("Failed to upload the job payload. ({} - {})".format(response.status_code, response.text[:100]))
 
     @classmethod
-    def create(cls, engine):
-        response = engine.request("POST", "/jobs.create")
+    def create(cls, engine, options):
+        payload = {
+            "options": options
+        }
+
+        response = engine.request("POST", "/jobs.create", json=payload)
         if response.status_code != 200:
             raise EngineError("Failed to create a new job. ({} - {})".format(response.status_code, response.text[:100]))
 
