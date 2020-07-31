@@ -82,7 +82,12 @@ class LocalEngine(BaseEngine):
         df_fit = df_fit.drop('key', axis=1)
         df_predict = df_predict.drop('key', axis=1)
 
-        m = Prophet()
+        seasonalities = options.pop('seasonalities', {})
+        extra_regressors = options.pop('extra_regressors', {})
+
+        m = Prophet(**options)
+        m.seasonalities = seasonalities
+        m.extra_regressors = extra_regressors
         m.fit(df_fit)
         forecast = m.predict(df_predict)
 
