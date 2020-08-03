@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.1.4] - 2020-08-03
+* Fixed error in the version of Pandas specified in requirements
+
 ## [0.1.3] - 2020-07-31
 * Added support for passing optional arguments to Prophet
 * Added support for adding seasonalities and regressors
