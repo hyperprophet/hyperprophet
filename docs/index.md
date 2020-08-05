@@ -26,7 +26,7 @@ The key features are:
 The recommended way to install hyperprophet is:
 
 ```
-$ pip install https://github.com/rorodata/hyperprophet/archive/v0.1.3.zip
+$ pip install https://github.com/rorodata/hyperprophet/archive/v0.1.4.zip
 ```
 
 ## License
